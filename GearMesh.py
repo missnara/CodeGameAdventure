@@ -22,6 +22,7 @@ class GearMesh:
     -------
     draw():
         Plots the gear mesh using matplotlib.
+    __eq__(): -> boolean
     """
 
     def __init__(self):
@@ -60,4 +61,10 @@ class GearMesh:
         ax.axis('off')
 
         plt.show()
+
+    def __eq__(self, other):
+        if isinstance(other, GearMesh):
+            return np.array_equal(self.mesh, other.mesh)
+        
+        return False
 
