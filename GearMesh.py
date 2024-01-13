@@ -31,7 +31,7 @@ class GearMesh:
         returns True if the action possible, False if not
     """
 
-    def __init__(self, colored_geared=3, color='#c57ebb') -> None:
+    def __init__(self, colored_gears=3, color='#c57ebb') -> None:
         """
         Initializes the GearMesh with hardwired mesh configuration.
         """
@@ -49,7 +49,7 @@ class GearMesh:
             ])
 
         self.indices = tuple(map(tuple, np.argwhere(self.mesh != None)))
-        selected_indices = random.sample(self.indices, colored_geared)
+        selected_indices = random.sample(self.indices, colored_gears)
         rows, cols = zip(*selected_indices)
         self.mesh[rows, cols] = color
 
@@ -72,7 +72,16 @@ class GearMesh:
         ax.set_xlim(-1, 9)
         ax.set_ylim(-9, 1)
         ax.axis('off')
-        plt.show()
+        return fig, ax
+
+    def _highlight_action(self, gear_idx):
+        fig, ax = self.draw()
+        y, x = gear_idx
+        circle = patches.Circle((x, y), 0.95, fill=False, color='red', linewidth=2, linestyle=':')
+        ax.add_patch(circle)
+        print(self.indices[0])
+        return fig, ax
+
 
     def __eq__(self, other):
         if isinstance(other, GearMesh):
